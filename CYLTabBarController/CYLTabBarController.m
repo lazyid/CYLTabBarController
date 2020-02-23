@@ -560,6 +560,11 @@ static void * const CYLTabImageViewDefaultOffsetContext = (void*)&CYLTabImageVie
     NSArray<UITabBarItem *> *tabBarItems = self.tabBar.items;
     [tabBarItems enumerateObjectsUsingBlock:^(UITabBarItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         UIEdgeInsets imageInset = UIEdgeInsetsMake(tabImageViewDefaultOffset, 0, -tabImageViewDefaultOffset, 0);
+        if ([UIDevice currentDevice].systemVersion.floatValue < 13.0) {
+            if ([[UIScreen mainScreen] bounds].size.height >= 812) {
+                imageInset = UIEdgeInsetsMake(10, 0, -10, 0);
+            }
+        }
         obj.imageInsets = imageInset;
         if (!self.shouldCustomizeTitlePositionAdjustment) {
             obj.titlePositionAdjustment = UIOffsetMake(0, MAXFLOAT);
